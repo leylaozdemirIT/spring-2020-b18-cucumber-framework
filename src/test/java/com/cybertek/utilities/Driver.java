@@ -45,21 +45,22 @@ public class Driver {
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
                     break;
-                case "chrome-remote":
+                case "chrome_remote":
                     try {
 //                        same thing as ChromeOptions
 //                        To request Selenium Grid to run tests on Chrome
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-                        desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-                        desiredCapabilities.setPlatform(Platform.LINUX);
-//                        ChromeOptions chromeOptions = new ChromeOptions();
-                        URL url = new URL("http://3.235.145.39:4444/wd/hub");
-                        driver = new RemoteWebDriver(url, desiredCapabilities);
-                    } catch (MalformedURLException e) {
+                        desiredCapabilities.setBrowserName(BrowserType.CHROME);
+                        desiredCapabilities.setCapability("platform",Platform.ANY);
+                        // if you are running your Selenium grid on LocalHost
+                        //driver = (new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),desiredCapabilities));
+                        // if you are running your Selenium grid on EC2
+                        driver = (new RemoteWebDriver(new URL("http://54.81.120.28:4444/wd/hub"),desiredCapabilities));
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                }
                     break;
-                case "firefox-remote":
+                case "remote_firefox":
                     try {
                         //to request grid to run tests on firefox
                         FirefoxOptions firefoxOptions = new FirefoxOptions();
